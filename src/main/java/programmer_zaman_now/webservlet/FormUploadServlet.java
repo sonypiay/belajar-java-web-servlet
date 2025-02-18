@@ -42,7 +42,18 @@ public class FormUploadServlet extends HttpServlet {
         Path uploadLocation = Path.of("upload/" + UUID.randomUUID().toString() + profile.getSubmittedFileName());
         Files.copy(profile.getInputStream(), uploadLocation);
 
-        String response = "Hello " + name + ". Your profile image saved in " + uploadLocation.toAbsolutePath();
-        resp.getWriter().println(response);
+        try {
+            URI uriFile = getClass().getClassLoader().getResource("html/preview-upload.html").toURI();
+            String getPath = Path.of(uriFile).toString();
+            Path path = Path.of(uriFile);
+            String html = Files.readString(path)
+                    .replace("$name", name)
+                    .replace("$profile", uploadLocation.getFileName().toString());
+
+            resp.setHeader("Content-Type", "text/html");
+            resp.getWriter().println(html);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
