@@ -7,29 +7,26 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Objects;
 
-@WebServlet(urlPatterns = "/todolist")
-public class TodolistServlet extends HttpServlet {
-
-    private List<String> todolist = new ArrayList<>();
+@WebServlet(urlPatterns = "/form")
+public class FormServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().println(todolist);
+//        Path path = Path.of(FormServlet.class.getResource("html/form.html"));
+//        String html = Files.readString(path);
+//        resp.getWriter().println(html);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String todo = req.getParameter("todo");
+        String firstName = req.getParameter("firstname");
+        String lastName = req.getParameter("lastname");
+        String response = "Hello " + firstName + " " + lastName;
 
-        if( todo != null ) {
-            todolist.add(todo);
-
-            resp.getWriter().println("Add todo: " + todo);
-        } else {
-            resp.getWriter().println("Todo parameter must exists!");
-        }
+        resp.getWriter().println(response);
     }
 }
