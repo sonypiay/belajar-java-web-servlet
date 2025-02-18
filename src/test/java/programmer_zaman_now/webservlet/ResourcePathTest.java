@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Objects;
 
 public class ResourcePathTest {
 
@@ -23,8 +23,9 @@ public class ResourcePathTest {
     }
 
     @Test
-    void getPathResource() throws IOException {
-        String resource = getClass().getClassLoader().getResource("html/form.html").getPath();
+    void getPathResource() throws IOException, URISyntaxException {
+        URI uri = getClass().getClassLoader().getResource("html/form.html").toURI();
+        String resource = Path.of(uri).toString();
         Path path = Path.of(resource);
 
         System.out.println(Files.readString(path));
