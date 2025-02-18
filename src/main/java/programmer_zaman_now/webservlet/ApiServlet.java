@@ -21,13 +21,15 @@ public class ApiServlet extends HttpServlet {
                 SayHelloRequest.class
         );
 
+        System.out.println(sayHelloRequest);
+
         String sayHello = "Hello " + sayHelloRequest.getFirstName() + " " + sayHelloRequest.getLastName();
         Map<String, Object> response = Map.of(
                 "data", sayHello
         );
         String jsonResponse = JsonUtil.objectMapper().writeValueAsString(response);
 
-        resp.setHeader("content-type", "application/json");
+        resp.setHeader("content-type", "application/json; charset=utf-8");
         resp.getWriter().println(jsonResponse);
     }
 }
