@@ -23,11 +23,10 @@ public class ResourcePathTest {
     }
 
     @Test
-    void getPathResource() {
-//        Path path = Path.of(getClass().getResource("/html/form.html").getPath());
-//        String html = Files.readString(path);
+    void getPathResource() throws IOException {
         String resource = getClass().getClassLoader().getResource("html/form.html").getPath();
         Path path = Path.of(resource);
-        System.out.println(Files.exists(path));
+
+        System.out.println(Files.readString(path));
     }
 }

@@ -16,9 +16,11 @@ public class FormServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        Path path = Path.of(FormServlet.class.getResource("html/form.html"));
-//        String html = Files.readString(path);
-//        resp.getWriter().println(html);
+        Path path = Path.of(getClass().getClassLoader().getResource("html/form.html").getPath());
+        String html = Files.readString(path);
+
+        resp.setHeader("Content-Type", "text/html");
+        resp.getWriter().println(html);
     }
 
     @Override
